@@ -48,3 +48,15 @@ your-project/
 ```
 
 Skills are available immediately via `/skill-name` in Claude Code. The workflow ordering is driven by CLAUDE.md — adjust the "New features" section to change what auto-triggers.
+
+## Development
+
+Requires Python 3.11+ and [uv](https://docs.astral.sh/uv/).
+
+```bash
+uv sync              # install dependencies
+uv run pytest        # run tests
+uv run pytest --cov  # run tests with coverage
+uv run ruff check .  # lint
+uv run ruff format . # format
+```
