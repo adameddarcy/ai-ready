@@ -60,3 +60,38 @@ uv run pytest --cov  # run tests with coverage
 uv run ruff check .  # lint
 uv run ruff format . # format
 ```
+
+## Transit API (Sweden GTFS)
+
+`src/app.py` is a developer-friendly FastAPI layer over Sweden's static GTFS
+feed (see `transit-api.md` for the brief). It never exposes raw GTFS rows —
+routes are collapsed into four transport modes (`train`/`metro`/`bus`/`boat`,
+plus `other`), and stop/route/journey/timetable queries hide the
+trips↔stop_times↔calendar joins GTFS requires.
+
+**Data setup** (not committed — `data/` is gitignored, ~1.5GB db file):
+
+```bash
+Z=/path/to/gtfs-sweden-3-static.zip
+mkdir -p data && cd data
+unzip -o "$Z" agency.txt routes.txt stops.txt trips.txt stop_times.txt calendar.txt calendar_dates.txt -d .
+# shapes.txt (3GB) is intentionally skipped - not needed for these endpoints
+sqlite3 gtfs.db < ../scripts/build_gtfs_db.sql   # or see git history for the raw commands
+rm agency.txt routes.txt stops.txt trips.txt stop_times.txt calendar.txt calendar_dates.txt
+```
+
+**Run:** `uv run uvicorn src.app:app --reload`
+
+**Endpoints:**
+- `GET /transport-types` — the four modes + counts
+- `GET /stops?q=&type=&lat=&lon=&radius_km=` — search/filter stops (name substring or geo radius)
+- `GET /routes?type=&stop_id=&q=` — filter routes
+- `GET /routes/{route_id}` — route detail incl. origin/destination termini
+- `GET /routes/{route_id}/timetable?stop_id=&date=&after=` — next arrivals at a stop, defaults to now
+- `GET /journeys?from_stop_id=&to_stop_id=&date=&type=` — direct trip options between two stops, or `{"options": [], "message": "..."}`
+
+Known simplifications (see `ponytail:` comments in `src/gtfs.py`): geography
+is name-substring or lat/lon radius (GTFS has no "city" field), route_type
+mapping buckets Google's extended codes into the four requested modes, and
+journeys only cover single-vehicle direct trips (no transfers/multi-leg
+routing).
