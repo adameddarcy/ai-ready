@@ -10,24 +10,21 @@ Claude Code skills and configuration for writing Python backend code. Drop this 
 
 | Skill | Invoke | Purpose |
 |---|---|---|
-| Socratic Preflight | `/socratic-preflight` | Five-question self-interrogation before writing code — surfaces assumptions, alternatives, and failure modes |
-| Threat Check | `/threat-check` | Quick STRIDE-based threat model pass — checks existing threat models, maps attack surface |
-| Failure Modes | `/failure-modes` | Define failure modes as invariants, test them before the happy path |
+| Preflight | `/preflight` | One calibrated pass before writing code — approach, alternative, and (only where triggered) security/failure risk and volatility |
 | TDD Guide | `/tdd-guide` | Red-green-refactor workflow for Python/pytest |
 | Boy Scout | `/boy-scout` | Leave touched code cleaner than you found it |
 | Clean Code | `/clean-code` | Clean Code principles adapted for Python — triggered by cyclomatic complexity |
 | Righting Software | `/righting-software` | Volatility-based decomposition per Juval Löwy — triggered by architectural decisions |
+| Python Code Review | `/py-review` | Principal-engineer review pass — readability, scalability, security, failure paths |
 
 ## New feature workflow
 
 The skills chain together automatically when implementing a new feature (configured in CLAUDE.md):
 
-1. **Think** — Socratic Preflight questions assumptions and commits to an approach
-2. **Secure** — Threat Check reviews security surface (if applicable)
-3. **Define failure** — Failure Modes produces testable invariants
-4. **Test** — TDD red-green-refactor, failure tests first
-5. **Clean up** — Boy Scout Rule on touched code
-6. **Conditionally** — Clean Code and Righting Software fire when complexity or architecture warrants it
+1. **Think** — Preflight commits to an approach, and only pulls in security/failure risk when the change actually touches that surface
+2. **Test** — TDD red-green-refactor, any invariants from preflight first
+3. **Clean up** — Boy Scout Rule on touched code
+4. **Conditionally** — Clean Code and Righting Software fire when complexity or architecture warrants it
 
 ## Usage
 
@@ -38,13 +35,12 @@ your-project/
 ├── CLAUDE.md              # copy or symlink
 └── .claude/
     └── commands/
-        ├── socratic-preflight.md
-        ├── threat-check.md
-        ├── failure-modes.md
+        ├── preflight.md
         ├── tdd-guide.md
         ├── boy-scout.md
         ├── clean-code.md
-        └── righting-software.md
+        ├── righting-software.md
+        └── py-review.md
 ```
 
 Skills are available immediately via `/skill-name` in Claude Code. The workflow ordering is driven by CLAUDE.md — adjust the "New features" section to change what auto-triggers.

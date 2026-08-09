@@ -28,14 +28,14 @@ changes. Flag them for a caching layer and recommend an appropriate strategy
 ### 4 — Security
 Check for OWASP vulnerabilities: SQL injection, hardcoded secrets, unsafe string
 formatting, missing auth checks, improper error handling that leaks internals.
-Cross-reference `/threat-check` STRIDE categories for security findings — map each
-security issue to its STRIDE category (S/T/R/I/D/E).
+Cross-reference `/preflight`'s security lens — map each security issue to a STRIDE
+category (S/T/R/I/D/E).
 
 ### 5 — Error Handling & Failure Paths
 Flag missing or incorrect error handling: swallowed exceptions, missing timeouts,
 no retry logic, partial-failure states left unrecoverable.
-Cross-reference `/failure-modes` — for each unhandled failure path, note the invariant
-that is at risk and whether a test exists for it.
+Cross-reference `/preflight`'s failure lens — for each unhandled failure path, note
+the invariant that is at risk and whether a test exists for it.
 
 ---
 
@@ -118,8 +118,8 @@ Failure Modes:
 | Finding type | Cross-reference |
 |---|---|
 | Readability, naming, complexity | `/clean-code` |
-| Security vulnerability | `/threat-check` — map to STRIDE, include SURFACE + RISK + MITIGATION |
-| Unhandled failure path | `/failure-modes` — name the invariant and whether a test covers it |
+| Security vulnerability | `/preflight` — map to STRIDE, include surface + risk |
+| Unhandled failure path | `/preflight` — name the invariant and whether a test covers it |
 | Architectural coupling | `/righting-software` — note the volatility boundary being violated |
 
 When a finding maps to another skill, include `Skill ref: /<skill>` in the inline
