@@ -34,10 +34,8 @@ Not lazy about: understanding the problem (read it fully and trace the real flow
 ## New features
 
 When implementing a new feature, always:
-1. Run the Socratic Preflight — question assumptions, surface alternatives, and commit to an approach before touching code (see `/socratic-preflight`). Skip only for truly mechanical changes.
-2. If the change touches auth, external APIs, persistence, user input, or trust boundaries, run a threat model pass (see `/threat-check`)
-3. Define failure-mode invariants and write their tests first, before the happy path (see `/failure-modes`). Skip only for pure functions with no side effects.
-4. Follow TDD (red-green-refactor) — failure-mode tests from step 3 are the first red phase, then happy-path tests as normal (see `/tdd-guide`)
-5. Apply the Boy Scout Rule — leave touched code cleaner than you found it (see `/boy-scout`)
-6. If the change introduces or touches code with high cyclomatic complexity (nested conditionals, multiple branches, complex boolean logic), apply the clean code rules — see `/clean-code`
-7. If the change involves new components, service boundaries, module structure, or architectural decisions (e.g. "where should this live?", "should this be a separate module?"), apply volatility-based decomposition — see `/righting-software`
+1. Run `/preflight` — approach, alternative, and (only where actually triggered) security/failure risk and volatility, in one calibrated pass. Skip only for truly mechanical changes.
+2. Follow TDD (red-green-refactor) — any invariants from preflight's risk step are the first red phase, then happy-path tests as normal (see `/tdd-guide`)
+3. Apply the Boy Scout Rule — leave touched code cleaner than you found it (see `/boy-scout`)
+4. If the change introduces or touches code with high cyclomatic complexity (nested conditionals, multiple branches, complex boolean logic), apply the clean code rules — see `/clean-code`
+5. If the change involves new components, service boundaries, module structure, or architectural decisions (e.g. "where should this live?", "should this be a separate module?"), apply volatility-based decomposition — see `/righting-software`
