@@ -16,6 +16,7 @@ Claude Code skills and configuration for writing Python backend code. Drop this 
 | Clean Code | `/clean-code` | Clean Code principles adapted for Python — triggered by cyclomatic complexity |
 | Righting Software | `/righting-software` | Volatility-based decomposition per Juval Löwy — triggered by architectural decisions |
 | Python Code Review | `/py-review` | Principal-engineer review pass — readability, scalability, security, failure paths |
+| Identity & Inclusion | `/identity-inclusion` | Engineering defaults for person data — opaque IDs, free-text names, cheap renames, no identity in logs — triggered by code touching person data |
 
 ## New feature workflow
 
@@ -24,7 +25,7 @@ The skills chain together automatically when implementing a new feature (configu
 1. **Think** — Preflight commits to an approach, and only pulls in security/failure risk when the change actually touches that surface
 2. **Test** — TDD red-green-refactor, any invariants from preflight first
 3. **Clean up** — Boy Scout Rule on touched code
-4. **Conditionally** — Clean Code and Righting Software fire when complexity or architecture warrants it
+4. **Conditionally** — Clean Code and Righting Software fire when complexity or architecture warrants it; Identity & Inclusion fires when the change touches person data
 
 ## Usage
 
@@ -40,7 +41,8 @@ your-project/
         ├── boy-scout.md
         ├── clean-code.md
         ├── righting-software.md
-        └── py-review.md
+        ├── py-review.md
+        └── identity-inclusion.md
 ```
 
 Skills are available immediately via `/skill-name` in Claude Code. The workflow ordering is driven by CLAUDE.md — adjust the "New features" section to change what auto-triggers.

@@ -39,3 +39,4 @@ When implementing a new feature, always:
 3. Apply the Boy Scout Rule — leave touched code cleaner than you found it (see `/boy-scout`)
 4. If the change introduces or touches code with high cyclomatic complexity (nested conditionals, multiple branches, complex boolean logic), apply the clean code rules — see `/clean-code`
 5. If the change involves new components, service boundaries, module structure, or architectural decisions (e.g. "where should this live?", "should this be a separate module?"), apply volatility-based decomposition — see `/righting-software`
+6. If the change stores, displays, validates, logs, infers or acts on information about a person, apply the identity and inclusion defaults — see `/identity-inclusion`
